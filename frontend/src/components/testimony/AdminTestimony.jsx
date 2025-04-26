@@ -10,7 +10,7 @@ const AdminTestimony = () => {
   useEffect(() => {
     const fetchTestimony = async () => {
       try {
-        const response = await fetch(`${apiurl}/api/testimony`, {
+        const response = await fetch(`http://localhost:8000/api/testimony`, {
           method: "GET",
           headers: {
             "Content-Type": "application/json",
@@ -39,7 +39,7 @@ const AdminTestimony = () => {
 
   const handleDelete = async (id) => {
     try {
-      const response = await fetch(`${apiurl}/api/testimony/${id}`, {
+      const response = await fetch(`http://localhost:8000/api/testimony/${id}`, {
         method: "DELETE",
         headers: {
           "Content-Type": "application/json",

@@ -8,6 +8,11 @@ const ReviewPopup = () => {
     testimony: "",
   });
 
+  const handleClear = () => {
+    setShow("");
+    setFormData("");
+  };
+
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
 
@@ -21,7 +26,7 @@ const ReviewPopup = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await fetch(`${apiUrl}/api/testimony`, {
+      const response = await fetch(`http://localhost:8000/api/testimony`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -122,7 +127,7 @@ const ReviewPopup = () => {
       </Modal>
 
       {/* Styling */}
-      <style jsx>{`
+      <style>{`
         .review-modal .modal-content {
           background-color: #f8f9fa;
           border-radius: 10px;

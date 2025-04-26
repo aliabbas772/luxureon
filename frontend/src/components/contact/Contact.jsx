@@ -6,31 +6,34 @@ const ContactPage = () => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [message, setMessage] = useState("");
+  const [subject, setSubject] = useState("");
 
   const apiUrl = import.meta.env.VITE_API_URL;
 
   const handleContactSubmit = async (e) => {
     e.preventDefault();
-
     try {
-      const response = await fetch(`${apiUrl}/api/contact`, {
+      const response = await fetch(`http://localhost:8000/api/contact/`, {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ name, email, message }),
+        headers: { "Content-Type": "application/json" },
+        mode: "cors",
+        body: JSON.stringify({ name, email, message, subject }),
       });
+  
+      const result = await response.json();
       if (response.ok) {
         alert("Message sent successfully!");
         setName("");
         setEmail("");
         setMessage("");
+        setSubject("");
       } else {
-        alert("Failed to send message. Please try again.");
+        console.error("Server error:", result);
+        alert(`Failed to send message: ${result.detail || JSON.stringify(result)}`);
       }
-    } catch (error) {
-      console.error("Error sending message:", error);
-      alert("Error sending message. Please try again.");
+    } catch (err) {
+      console.error("Network error:", err);
+      alert("Error sending message. Please check your connection and try again.");
     }
   };
 
@@ -92,6 +95,19 @@ const ContactPage = () => {
             />
           </div>
           <div className="mb-4">
+            <label htmlFor="subject" className="form-label">
+              Subject
+            </label>
+            <input
+              type="subject"
+              className="form-control"
+              id="subject"
+              required
+              value={subject}
+              onChange={(e) => setSubject(e.target.value)}
+            />
+          </div>
+          <div className="mb-4">
             <label htmlFor="message" className="form-label">
               Message
             </label>
@@ -132,14 +148,14 @@ const ContactPage = () => {
           <div className="row">
             <div className="col-md-4 text-center mb-4 mb-md-0">
               <h4>Phone</h4>
-              <a href="tel:+2348135881858" className="d-block">
-                (+234) 8135881858
+              <a href="tel:+91xxxxxxxxxx" className="d-block">
+                (+91) xxxxxxxxxx
               </a>
             </div>
             <div className="col-md-4 text-center mb-4 mb-md-0">
               <h4>Email</h4>
-              <a href="mailto:contact@cutbyadunni.com" className="d-block">
-                cutsbyadunni@gmail.com
+              <a href="mailto:contact@luxureon.com" className="d-block">
+                luxureon@gmail.com
               </a>
             </div>
             <div className="col-md-4 text-center">
@@ -154,7 +170,7 @@ const ContactPage = () => {
                   Facebook
                 </a>
                 <a
-                  href="https://www.instagram.com/adunni_dunnki"
+                  href="https://www.instagram.com/luxureon"
                   className="btn btn-outline-warning mx-2"
                   target="_blank"
                   rel="noopener noreferrer"

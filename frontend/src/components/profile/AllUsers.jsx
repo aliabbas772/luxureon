@@ -10,7 +10,7 @@ const AllUsers = () => {
   useEffect(() => {
     const fetchUsers = async () => {
       try {
-        const response = await fetch(`${apiUrl}/api/users/all`, {
+        const response = await fetch(`http://localhost:8000/api/users/all`, {
           method: 'GET',
           headers: {
             'Content-Type': 'application/json',

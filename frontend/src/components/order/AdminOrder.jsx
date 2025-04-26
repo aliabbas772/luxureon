@@ -13,7 +13,7 @@ const AdminOrder = () => {
   useEffect(() => {
     const fetchOrders = async () => {
       try {
-        const response = await fetch(`${apiUrl}/api/orders/all`, {
+        const response = await fetch(`http://localhost:8000/api/orders/all`, {
           method: "GET",
           headers: {
             Authorization: `Bearer ${localStorage.getItem("authToken")}`,

@@ -51,14 +51,14 @@ function NavComp() {
             {userRole === "admin" ? (
               <>
                 <Nav.Link as={Link} to="/">Home</Nav.Link>
-                <Nav.Link as={Link} to="/aboutus">About Us</Nav.Link>
+                <Nav.Link as={Link} to="/portfolio">Portfolio</Nav.Link>
                 <Nav.Link as={Link} to="/admin">Dashboard</Nav.Link>
               </>
             ) : (
               <>
                 <Nav.Link as={Link} to="/">Home</Nav.Link>
-                <Nav.Link as={Link} to="/aboutus">About Us</Nav.Link>
-                <Nav.Link as={Link} to="/shopnow">Shop Now</Nav.Link>
+                <Nav.Link as={Link} to="/portfolio">Portfolio</Nav.Link>
+                <Nav.Link as={Link} to="/order">Order</Nav.Link>
                 <Nav.Link as={Link} to="/contact">Contact</Nav.Link>
               </>
             )}

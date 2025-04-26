@@ -30,13 +30,14 @@ const SingleOrder = () => {
   useEffect(() => {
     const fetchOrderDetails = async () => {
       try {
-        const response = await fetch(`${apiUrl}/api/orders/${id}`, {
-          method: "GET",
+        const response = await fetch(`http://localhost:8000/api/orders/${id}`, {
+          method: "POST",
           headers: {
             Authorization: `Bearer ${localStorage.getItem("authToken")}`,
+            "Content-Type": "application/json",
           },
         });
-
+        console.log(response);
         if (!response.ok) throw new Error("Failed to fetch order details");
 
         const data = await response.json();
@@ -66,7 +67,7 @@ const SingleOrder = () => {
   // Delete the order
   const handleDeleteOrder = async () => {
     try {
-      const response = await fetch(`${apiUrl}/api/orders/${id}`, {
+      const response = await fetch(`http://localhost:8000/api/orders/${id}`, {
         method: "DELETE",
         headers: {
           Authorization: `Bearer ${localStorage.getItem("authToken")}`,
@@ -87,15 +88,15 @@ const SingleOrder = () => {
       order.status === "Completed" ? "In Progress" : "Completed";
 
     try {
-      const response = await fetch(`${apiUrl}/api/orders/${id}`, {
-        method: "PUT",
+      const response = await fetch(`http://localhost:8000/api/orders/${id}`, {
+        method: "POST",
         headers: {
           Authorization: `Bearer ${localStorage.getItem("authToken")}`,
           "Content-Type": "application/json",
         },
         body: JSON.stringify({ status: newStatus }),
       });
-
+      console.log(response);
       if (!response.ok) throw new Error("Failed to update order status");
       window.location.reload();
 

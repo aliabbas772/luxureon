@@ -4,7 +4,6 @@ import { Navigate } from 'react-router-dom';
 const ProtectedRoute = ({ children }) => {
   const isAdmin = localStorage.getItem('role');
     
-
   if (!isAdmin || isAdmin !== 'admin') {
     return <Navigate to="*" />; // Redirect to pagenotfound if not authenticated
   }

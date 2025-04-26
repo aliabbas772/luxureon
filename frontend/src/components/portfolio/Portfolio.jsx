@@ -40,7 +40,7 @@ const PortfolioPage = () => {
   useEffect(() => {
     const fetchPortfolioItems = async () => {
       try {
-        const response = await fetch(`${apiUrl}/api/portfolio`, {
+        const response = await fetch(`http://localhost:8000/api/portfolio`, {
           method: "GET",
           headers: {
             Authorization: `Bearer ${localStorage.getItem("authToken")}`,
@@ -74,7 +74,7 @@ const PortfolioPage = () => {
       >
         <h1>Our Portfolio</h1>
         <p>
-          Discover the artistry of CutsByAdunni. Here are some of our most loved
+          Discover the artistry of Luxureon. Here are some of our most loved
           creations tailored for our clients.
         </p>
       </section>

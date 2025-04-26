@@ -15,7 +15,7 @@ const UploadTestimony = () => {
     e.preventDefault();
 
     try {
-      const response = await fetch(`${apiUrl}/api/testimony`, {
+      const response = await fetch(`http://localhost:8000/api/testimony`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

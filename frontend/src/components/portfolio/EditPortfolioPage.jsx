@@ -26,7 +26,7 @@ const EditPortfolioPage = () => {
   useEffect(() => {
     const fetchPortfolio = async () => {
       try {
-        const response = await fetch(`${apiUrl}/api/portfolio/${id}`, {
+        const response = await fetch(`http://localhost:8000/api/portfolio/${id}`, {
           method: "GET",
           headers: {
             Authorization: `Bearer ${localStorage.getItem("authToken")}`,
@@ -92,7 +92,7 @@ const EditPortfolioPage = () => {
     e.preventDefault();
 
     try {
-      const response = await fetch(`${apiUrl}/api/portfolio/${id}`, {
+      const response = await fetch(`http://localhost:8000/api/portfolio/${id}`, {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",

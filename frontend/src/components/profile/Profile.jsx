@@ -9,9 +9,10 @@ const Profile = () => {
 
   useEffect(() => {
     // Fetch user information
+    // console.log("Fetching authToken...",localStorage.getItem("authToken"));
     const fetchUser = async () => {
       try {
-        const response = await axios.get(`${apiUrl}/api/users/me`, {
+        const response = await axios.get(`http://localhost:8000/api/users/me`, {
           headers: {
             Authorization: `Bearer ${localStorage.getItem("authToken")}`,
           },
@@ -27,7 +28,7 @@ const Profile = () => {
     // Fetch orders
     const fetchOrders = async () => {
       try {
-        const response = await axios.get(`${apiUrl}/api/orders`, {
+        const response = await axios.get(`http://localhost:8000/api/orders`, {
           headers: {
             Authorization: `Bearer ${localStorage.getItem("authToken")}`,
           },
@@ -39,7 +40,7 @@ const Profile = () => {
     };
 
     fetchOrders();
-  }, [apiUrl]);
+  }, ['http://localhost:8000/api/orders']);
 
   if (!user) return <div className="text-center">Loading...</div>;
 

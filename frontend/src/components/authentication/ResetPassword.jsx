@@ -22,7 +22,7 @@ const ResetPassword = () => {
       setLoading(true);
 
       // Make the POST request
-      const response = await fetch(`${apiUrl}/api/users/reset-password`, {
+      const response = await fetch(`http://localhost:8000/api/users/reset-password`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

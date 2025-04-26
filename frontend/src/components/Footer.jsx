@@ -15,7 +15,7 @@ const Footer = () => {
       }}
     >
       {/* Footer Text */}
-      <p style={{ marginBottom: '10px' }}>&copy; 2025 CutByAdunni. All rights reserved.</p>
+      <p style={{ marginBottom: '10px' }}>&copy; 2025 Luxureon. All rights reserved.</p>
 
       {/* Social Media Icons */}
       <div style={{ marginBottom: '15px' }}>
@@ -76,7 +76,7 @@ const Footer = () => {
           fontFamily: 'Arial, sans-serif',
         }}
       >
-        Designed and developed by XHINA Tech
+        Designed and developed by Ali.
       </p>
     </footer>
   );

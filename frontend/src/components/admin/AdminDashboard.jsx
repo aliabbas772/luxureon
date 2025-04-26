@@ -101,17 +101,18 @@ const AdminDashboard = () => {
   const fetchDashboardData = async () => {
     try {
       setLoading(true);
-      const response = await fetch(`${apiUrl}/api/orders/all`, {
+      const response = await fetch(`http://localhost:8000/api/orders/all`, {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
           Authorization: `Bearer ${localStorage.getItem("authToken")}`,
-        },
+                  },
       });
 
       if (!response.ok) {
-        throw new Error("Failed to fetch orders.");
-      }
+        const errorText = await response.text();
+        throw new Error(`Error ${response.status}: ${errorText}`);
+      }      
 
       const data = await response.json();
 
@@ -123,9 +124,7 @@ const AdminDashboard = () => {
 
       setOrders(sortedOrders);
     } catch (err) {
-      setError(
-        err.message || "Failed to fetch orders. Please try again later."
-      );
+      setError("Failed to fetch orders. Please try again later.");
     } finally {
       setLoading(false);
     }

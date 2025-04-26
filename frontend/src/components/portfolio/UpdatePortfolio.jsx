@@ -26,12 +26,15 @@ const EditPortfolioPage = () => {
   useEffect(() => {
     const fetchPortfolio = async () => {
       try {
-        const response = await fetch(`${apiUrl}/api/portfolio/${id}`, {
-          method: "GET",
-          headers: {
-            Authorization: `Bearer ${localStorage.getItem("authToken")}`,
-          },
-        });
+        const response = await fetch(
+          `http://localhost:8000/api/portfolio/${id}`,
+          {
+            method: "GET",
+            headers: {
+              Authorization: `Bearer ${localStorage.getItem("authToken")}`,
+            },
+          }
+        );
         if (!response.ok) throw new Error("Failed to fetch portfolio item");
         const data = await response.json();
         setPortfolio(data);
@@ -85,14 +88,17 @@ const EditPortfolioPage = () => {
     e.preventDefault();
 
     try {
-      const response = await fetch(`${apiUrl}/api/portfolio/${id}`, {
-        method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${localStorage.getItem("authToken")}`,
-        },
-        body: JSON.stringify(portfolio),
-      });
+      const response = await fetch(
+        `http://localhost:8000/api/portfolio/${id}`,
+        {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${localStorage.getItem("authToken")}`,
+          },
+          body: JSON.stringify(portfolio),
+        }
+      );
 
       if (!response.ok) throw new Error("Failed to update portfolio item");
 

@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import emailjs from "emailjs-com";
 import {
   Form,
   Button,
@@ -96,6 +97,8 @@ const OrderPage = () => {
   const cloudName = import.meta.env.VITE_REACT_APP_CLOUDINARY_CLOUD_NAME;
   const apiUrl = import.meta.env.VITE_API_URL;
   const uploadPreset = import.meta.env.VITE_REACT_APP_CLOUDINARY_UPLOAD_PRESET;
+  // console.log("Cloud Name:", cloudName);
+  // console.log("Upload Preset:", uploadPreset);
 
   const handleClear = () => {
     setName("");
@@ -108,8 +111,9 @@ const OrderPage = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
     try {
-      const response = await fetch(`${apiUrl}/api/orders`, {
+      const response = await fetch(`http://localhost:8000/api/orders`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -124,8 +128,37 @@ const OrderPage = () => {
           styleInspo,
         }),
       });
+      const responseData = await response.json(); // 👈 This is key!
+      console.log("Sertvice ID:", import.meta.env.VITE_EMAILJS_SERVICE_ID);
+      console.log("Template ID:", import.meta.env.VITE_EMAILJS_TEMPLATE_ID);
+      console.log("Public Key:", import.meta.env.VITE_EMAILJS_PUBLIC_KEY);
+      console.log("Response:", responseData);
 
       if (response.ok) {
+        // Send email notification
+        const templateParams = {
+          customer_name: name,
+          email: email,
+          fabric_details: fabricDetails,
+          measurements: measurements,
+          additional_notes: additionalNotes,
+          style_inspo: styleInspo.join(", "), // or use a loop to format
+        };
+
+        emailjs
+          .send(
+            import.meta.env.VITE_EMAILJS_SERVICE_ID, // Replace with your EmailJS service ID
+            import.meta.env.VITE_EMAILJS_TEMPLATE_ID, // Replace with your EmailJS template ID
+            templateParams,
+            import.meta.env.VITE_EMAILJS_PUBLIC_KEY // Replace with your EmailJS public key
+          )
+          .then((result) => {
+            console.log("Email sent:", result.text);
+          })
+          .catch((error) => {
+            console.error("EmailJS error:", error);
+          });
+
         setAlertMessage({
           type: "success",
           text: "Order submitted successfully!",
@@ -138,10 +171,10 @@ const OrderPage = () => {
         });
       }
     } catch (error) {
-      console.error("Error submitting order:", error);
+      console.error("order:", error);
       setAlertMessage({
         type: "danger",
-        text: "Failed to submit order. Please try again.",
+        text: "Error, Please try again.",
       });
     }
   };
@@ -191,7 +224,7 @@ const OrderPage = () => {
   return (
     <div>
       <section style={styles.hero}>
-        <h1>Welcome to CutByAdunni</h1>
+        <h1>Welcome to Luxureon</h1>
         <p>Your personal tailoring experience made easy and stylish.</p>
         <Button variant="warning" size="lg" href="#customize-order-section">
           Start Your Order

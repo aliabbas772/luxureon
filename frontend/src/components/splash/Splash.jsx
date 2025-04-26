@@ -1,14 +1,13 @@
 import "./Splash.css";
+import logo from '../../assets/images/luxureonlogo.jpg';
+
+
 
 const Splash = () => {
   return (
     <div className="splash-container">
-      <img
-        // src="./images/newlogo.png"
-        src="https://res.cloudinary.com/dtcjgwt8p/image/upload/v1738074026/ednj0qmxzxo7i1tkc1hu.png"
-        alt="CUTSBYADUNNI Logo"
-        className="splash-logo"
-      />
+      <img src={logo} alt="Luxureon Logo" className="splash-logo"/>
+
     </div>
   );
 };

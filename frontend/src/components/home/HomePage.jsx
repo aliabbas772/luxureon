@@ -10,11 +10,7 @@ import {
   Card,
 } from "react-bootstrap";
 import { motion } from "framer-motion";
-import {
-  FaCut,
-  FaDollarSign,
-  FaClock,
-} from "react-icons/fa";
+import { FaCut, FaDollarSign, FaClock } from "react-icons/fa";
 
 import "./Home.css";
 import UploadTestimony from "../testimony/UploadTestimony";
@@ -28,15 +24,18 @@ const HomePage = () => {
     name: "",
     email: "",
     message: "",
+    subject: "",
   });
   const [showAlert, setShowAlert] = useState(false);
 
   useEffect(() => {
     const fetchPortfolio = async () => {
       try {
-        const response = await fetch(`${apiUrl}/api/portfolio`);
+        const response = await fetch(`http://localhost:8000/api/portfolio`);
+        console.log(response);
         if (!response.ok) throw new Error("Failed to fetch portfolio items");
         const data = await response.json();
+
         setPortfolioItems(data);
       } catch (error) {
         console.error("Error fetching portfolio items:", error);
@@ -49,7 +48,7 @@ const HomePage = () => {
   useEffect(() => {
     const fetchTestimony = async () => {
       try {
-        const response = await fetch(`${apiUrl}/api/testimony`);
+        const response = await fetch(`http://localhost:8000/api/testimony`);
         if (!response.ok) throw new Error("Failed to fetch testimonies");
         const data = await response.json();
         setTestimony(data);
@@ -61,12 +60,32 @@ const HomePage = () => {
     fetchTestimony();
   }, []);
 
-  const handleContactSubmit = (e) => {
+  const handleContactSubmit = async (e) => {
     e.preventDefault();
-    setShowAlert(true);
-    setContactDetails({ name: "", email: "", message: "" });
-    setTimeout(() => setShowAlert(false), 3000);
+    try {
+      const response = await fetch(`http://localhost:8000/api/contact/`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        mode: "cors",
+        body: JSON.stringify(contactDetails),
+      });
+      console.log(response);
+      const result = await response.json();
+      
+      if (response.ok) {
+        setShowAlert(true);
+        setContactDetails({ name: "", email: "", message: "", subject: "" });
+        setTimeout(() => setShowAlert(false), 3000);
+      } else {
+        console.error("Server error:", result);
+        alert(`Failed to send message: ${result.detail || JSON.stringify(result)}`);
+      }
+    } catch (err) {
+      console.error("Network error:", err);
+      alert("Error sending message. Please check your connection and try again.");
+    }
   };
+  
 
   const styles = {
     cardImage: {
@@ -201,7 +220,7 @@ const HomePage = () => {
               onClose={() => setShowAlert(false)}
               dismissible
             >
-              Thank you for reaching out! We'll get back to you soon.
+               Thank you for reaching out! We'll get back to you soon.
             </Alert>
           )}
           <Form onSubmit={handleContactSubmit}>
@@ -228,6 +247,19 @@ const HomePage = () => {
                 }
               />
             </Form.Group>
+            <Form.Group controlId="subject" className="mt-3">
+              <Form.Label>Subject</Form.Label>
+              <Form.Control
+                type="subject"
+                value={contactDetails.subject}
+                onChange={(e) =>
+                  setContactDetails({
+                    ...contactDetails,
+                    subject: e.target.value,
+                  })
+                }
+              />
+            </Form.Group>
             <Form.Group controlId="message" className="mt-3">
               <Form.Label>Message</Form.Label>
               <Form.Control
@@ -248,7 +280,6 @@ const HomePage = () => {
           </Form>
         </Container>
       </section>
-
     </div>
   );
 };

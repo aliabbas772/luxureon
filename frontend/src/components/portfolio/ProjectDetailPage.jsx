@@ -28,7 +28,7 @@ const ProjectDetailPage = () => {
   useEffect(() => {
     const fetchProjectDetail = async () => {
       try {
-        const response = await fetch(`${apiUrl}/api/portfolio/${id}`);
+        const response = await fetch(`http://localhost:8000/api/portfolio/${id}`);
         if (!response.ok) {
           throw new Error("Failed to fetch project details");
         }
@@ -62,7 +62,7 @@ const ProjectDetailPage = () => {
   // Handle delete project
   const handleDelete = async () => {
     try {
-      const response = await fetch(`${apiUrl}/api/portfolio/${id}`, {
+      const response = await fetch(`http://localhost:8000/api/portfolio/${id}`, {
         method: "DELETE",
         headers: {
           Authorization: `Bearer ${localStorage.getItem("authToken")}`,

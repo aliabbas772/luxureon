@@ -16,6 +16,9 @@ import ProtectedRoute from "./components/ProtectedRoute"; // Import ProtectedRou
 import PageNotFound from "./components/error/PageNotFound";
 import SingleOrder from "./components/order/SingleOrder";
 import AdminOrder from "./components/order/AdminOrder";
+import AboutUs from "./components/aboutus/AboutUs";
+// import ShopNow from "./components/shopnow/ShopNow";
+// import ProductDetail from './components/shopnow/ProductDetail';
 import Profile from "./components/profile/Profile";
 import AllUsers from "./components/profile/AllUsers";
 import UploadTestimony from "./components/testimony/UploadTestimony";
@@ -78,8 +81,12 @@ const App = () => {
             <Route path="*" element={<PageNotFound />} />
             <Route path="/order/:id" element={<SingleOrder />} />
             <Route path="/adminOrder" element={<AdminOrder />} />
+            <Route path="/adminDashboard" element={<AdminDashboard />} />
             <Route path="/profile" element={<Profile />} />
             <Route path="/users" element={<AllUsers />} />
+            {/* <Route path="/shopnow" element={<ShopNow />} /> */}
+            {/* <Route path="/product/:id" element={<ProductDetail />} /> */}
+            <Route path="/aboutus" element={<AboutUs />} />
             <Route path="/testimony" element={<UploadTestimony />} />
             <Route path="/admintestimony/" element={<AdminTestimony />} />
             <Route path="/project/:id" element={<ProjectDetailPage />} />

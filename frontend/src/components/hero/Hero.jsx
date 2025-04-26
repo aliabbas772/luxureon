@@ -73,7 +73,7 @@ const HeroSection = () => {
         <Row>
           <Col style={styles.content}>
             <h1 className="display-4" style={styles.heading}>
-              Welcome to Cuts By Adunni
+              Welcome to Luxureon
             </h1>
             <p className="lead">
               Your one-stop destination for elegant, tailor-made outfits.

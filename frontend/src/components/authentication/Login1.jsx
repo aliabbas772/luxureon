@@ -2,26 +2,23 @@ import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 
 const Login = () => {
-  const [identifier, setIdentifier] = useState(""); // Changed to identifier for flexibility
+  const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [error, setError] = useState(""); // For error messages
-  const [success, setSuccess] = useState(""); // For success messages
 
   const navigate = useNavigate();
 
+  // fetch role from localStorage
+  const role = localStorage.getItem("role");
+
   const handleClear = () => {
-    setIdentifier("");
+    setEmail("");
     setPassword("");
-    setError("");
-    setSuccess("");
   };
 
   const apiUrl = import.meta.env.VITE_API_URL;
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setError(""); // Clear previous messages
-    setSuccess("");
 
     try {
       const response = await fetch(`http://localhost:8000/api/users/login`, {
@@ -29,41 +26,29 @@ const Login = () => {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ identifier, password }), // Use identifier instead of email
+        body: JSON.stringify({ identifier: email, password }),
       });
 
       if (response.ok) {
         const data = await response.json();
         const { authToken, user, role, loggedIn } = data;
 
-        // Store data in localStorage after successful login
         localStorage.setItem("authToken", authToken);
         localStorage.setItem("user", JSON.stringify(user));
         localStorage.setItem("role", role);
         localStorage.setItem("loggedIn", loggedIn);
-
-        setSuccess("Login successful!");
-        // handleClear();
-
-        // Delay navigation to ensure state updates are complete
-        setTimeout(() => {
-          if (role === "admin") {
-            navigate("/admin", { replace: true });
-            window.location.reload();
-          } else {
-            navigate("/", { replace: true });
-            window.location.reload();
-          }
-        }, 1000);
+        alert("Login successful!");
+        handleClear();
+        if (role === "admin") {
+          navigate("/admin");
+        } else {
+          navigate("/");
+        }
       } else {
-        const errorData = await response.json();
-        setError(
-          errorData.message || "Login failed. Please check your credentials."
-        );
+        alert("Login failed. Please check your credentials.");
       }
     } catch (error) {
       console.error("Error logging in:", error);
-      setError("An error occurred. Please try again later.");
     }
   };
 
@@ -75,15 +60,15 @@ const Login = () => {
             <h2 className="text-center">Login</h2>
             <form onSubmit={handleSubmit}>
               <div className="mb-3">
-                <label htmlFor="identifier" className="form-label">
+                <label htmlFor="email" className="form-label">
                   Email Address or Username
                 </label>
                 <input
                   type="text"
                   className="form-control"
-                  id="identifier"
-                  value={identifier}
-                  onChange={(e) => setIdentifier(e.target.value)}
+                  id="email"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
                   required
                   placeholder="Enter your email or username"
                 />
@@ -105,8 +90,6 @@ const Login = () => {
               <button type="submit" className="btn btn-warning w-100">
                 Login
               </button>
-              {error && <p className="text-danger mt-3">{error}</p>}
-              {success && <p className="text-success mt-3">{success}</p>}
             </form>
             <div className="text-center mt-3">
               <p>
